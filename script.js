@@ -69,10 +69,32 @@ const EBQ_OPTIONS = [
 ];
 
 let MODEL = null;
+let MODEL_LOAD_ERROR = null;
 
 async function loadModel() {
-  const res = await fetch("model.json");
-  MODEL = await res.json();
+  try {
+    const res = await fetch("model.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    MODEL = await res.json();
+  } catch (err) {
+    MODEL_LOAD_ERROR = err;
+    console.error("模型加载失败：", err);
+  }
+}
+
+function showLoadError() {
+  const box = document.getElementById("result");
+  box.hidden = false;
+  const isFileProtocol = location.protocol === "file:";
+  box.innerHTML = `
+    <div class="result-card risk-high">
+      <div class="result-text">模型加载失败，无法预测</div>
+      <div class="result-sub">
+        ${isFileProtocol
+          ? "检测到您是直接双击打开的网页文件（地址栏以 file:// 开头）。出于浏览器安全限制，这种方式无法读取同目录下的 model.json 文件，因此点开始预测没有反应。<br/>解决方法：① 通过 GitHub Pages 访问部署好的网址（推荐，正式使用时用这种方式）；或 ② 本地测试时用命令行在该文件夹下运行 <code>python -m http.server 8000</code>，然后浏览器打开 http://localhost:8000 访问，不要直接双击html文件。"
+          : "请检查网络连接或刷新页面重试；如果问题持续，可能是 model.json 文件缺失或损坏。"}
+      </div>
+    </div>`;
 }
 
 function buildForm() {
@@ -179,15 +201,31 @@ function renderResult(res) {
 window.addEventListener("DOMContentLoaded", async () => {
   buildForm();
   await loadModel();
+  if (MODEL_LOAD_ERROR) {
+    showLoadError();
+  }
   document.getElementById("predict-form").addEventListener("submit", (e) => {
     e.preventDefault();
+    if (MODEL_LOAD_ERROR || !MODEL) {
+      showLoadError();
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     const form = e.target;
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    const inputs = readForm(form);
-    const res = predict(inputs);
-    renderResult(res);
+    try {
+      const inputs = readForm(form);
+      const res = predict(inputs);
+      renderResult(res);
+    } catch (err) {
+      console.error("预测出错：", err);
+      const box = document.getElementById("result");
+      box.hidden = false;
+      box.innerHTML = `<div class="result-card risk-high"><div class="result-text">预测出错</div><div class="result-sub">${err.message || err}</div></div>`;
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   });
 });

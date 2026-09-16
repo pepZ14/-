@@ -195,7 +195,7 @@ function renderResult(res) {
     <div class="result-card ${riskClass}">
       <div class="result-pct">${pct}%</div>
       <div class="result-text">模型预测肥胖概率 ｜ ${riskText}</div>
-      <div class="result-sub">判别阈值：${(MODEL.best_threshold * 100).toFixed(1)}%（训练集OOF Youden指数确定）｜ 膳食模式得分：${res.m2_score.toFixed(2)}</div>
+      <div class="result-sub">膳食模式得分：${res.m2_score.toFixed(2)}</div>
     </div>`;
   box.scrollIntoView({ behavior: "smooth", block: "center" });
 }

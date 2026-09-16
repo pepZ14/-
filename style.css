@@ -29,7 +29,31 @@ body {
   text-align: center;
 }
 .site-header h1 { margin: 0 0 6px; font-size: 1.6rem; }
-.site-header .subtitle { margin: 0; opacity: 0.9; font-size: 0.9rem; }
+.site-header .subtitle { margin: 0 0 14px; opacity: 0.9; font-size: 0.9rem; }
+
+.mode-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mode-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: background 0.15s;
+}
+.mode-link:hover { background: rgba(255, 255, 255, 0.28); }
+.mode-link.active {
+  background: #fff;
+  color: var(--primary-dark);
+  border-color: #fff;
+}
 
 .container {
   max-width: 760px;

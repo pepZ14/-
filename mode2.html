@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>中青年人群肥胖风险预测系统 | Obesity Risk Prediction</title>
+<title>中青年人群肥胖风险预测系统（EFA模式二） | Obesity Risk Prediction</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <header class="site-header">
   <h1>中青年人群肥胖风险预测系统</h1>
-  <p class="subtitle">A Prediction System for Chinese Adults' Obesity（研究原型 / Research Prototype）</p>
+  <p class="subtitle">A Prediction System for Chinese Adults' Obesity（研究原型 / Research Prototype） · EFA模式二</p>
   <nav class="mode-nav">
-    <a class="mode-link active" href="index.html">EFA模式一</a>
-    <a class="mode-link" href="mode2.html">EFA模式二</a>
+    <a class="mode-link" href="index.html">EFA模式一</a>
+    <a class="mode-link active" href="mode2.html">EFA模式二</a>
     <a class="mode-link" href="entropy.html">熵权法</a>
   </nav>
 </header>
@@ -21,7 +21,7 @@
   <section class="notice">
     <p><strong>使用说明：</strong>本工具基于一项针对中国中青年人群（n=712）的横断面调查数据训练的随机森林模型，
     用于研究和科普目的，<strong>不能替代专业医疗诊断或建议</strong>。所有输入数据仅在您的浏览器本地计算，不会上传或保存到任何服务器。
-    本项目对膳食模式设计了三种独立测度方式（EFA模式一/模式二/熵权法），上方可切换查看各自对应的预测页面。</p>
+    本页使用的是<strong>EFA模式二</strong>膳食模式测度方式，如需查看模式一或熵权法版本，请点击上方导航切换。</p>
   </section>
 
   <form id="predict-form">
@@ -68,14 +68,15 @@
   <div id="result" hidden></div>
 
   <section class="card about">
-    <h2>关于本模型</h2>
+    <h2>关于本模型（EFA模式二）</h2>
     <ul>
-      <li>算法：随机森林（RandomForest，300棵树，最大深度10，叶节点最小样本数4），经嵌套交叉验证网格搜索确定超参数。</li>
-      <li>膳食模式变量：EFA模式一——探索性因子分析（公共因子法，Kaiser特征值准则 + Horn平行分析确定为单因子结构）直接对13个食物大类均值得分做因子分析得到。</li>
-      <li>网页内膳食得分公式：由训练数据精确反推（OLS回归，R²≈1.000，精确重构，非近似）。</li>
+      <li>算法：随机森林（RandomForest，300棵树，最大深度不限，叶节点最小样本数4），经嵌套交叉验证网格搜索确定超参数。</li>
+      <li>膳食模式变量：EFA模式二——先对13个食物大类各自内部的题项做单因子EFA"提纯"，再对13个提纯后的得分做第二次EFA得到。</li>
+      <li><strong>网页内膳食得分公式说明：</strong>模式二的精确计算需要78个原始食物题项，为保持和模式一一致的13输入体验，
+        本页用训练数据对"模式二得分 ~ 13个食物大类均值得分"做OLS回归得到近似线性公式（R²=0.994，高精度近似，非精确重构，
+        与真实模式二得分会有细微误差）。</li>
       <li>纳入模型的其余变量（LASSO在训练集上筛选得到）：运动习惯、肥胖家族史、EBQ进食行为总分、吸烟状态。</li>
-      <li>独立测试集表现：AUC ≈ 0.938（95% CI 0.907–0.964）。</li>
-      <li>另外两种膳食模式测度方式（EFA模式二、熵权法）见上方导航，三者预测结果通常高度接近（原始得分相关系数&gt;0.98）。</li>
+      <li>独立测试集表现：AUC ≈ 0.931（95% CI 0.897–0.961）。</li>
     </ul>
   </section>
 </main>
@@ -84,6 +85,6 @@
   <p>本页面为学术研究衍生工具，预测结果仅供参考。</p>
 </footer>
 
-<script src="script.js"></script>
+<script src="script_mode2.js"></script>
 </body>
 </html>

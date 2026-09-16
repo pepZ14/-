@@ -61,16 +61,6 @@ body {
   padding: 20px 16px 60px;
 }
 
-.notice {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-bottom: 20px;
-  font-size: 0.92rem;
-  color: #1e3a5f;
-}
-
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -173,9 +163,6 @@ select {
 .risk-low .result-pct { color: var(--safe); }
 .result-text { font-size: 1.05rem; font-weight: 600; margin-top: 4px; }
 .result-sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; }
-
-.about ul { padding-left: 20px; font-size: 0.88rem; color: var(--text-muted); margin: 0; }
-.about li { margin-bottom: 6px; }
 
 .site-footer {
   text-align: center;

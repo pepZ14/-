@@ -9,7 +9,6 @@
 <body>
 <header class="site-header">
   <h1>中青年人群肥胖风险预测系统</h1>
-  <p class="subtitle">A Prediction System for Chinese Adults' Obesity（研究原型 / Research Prototype） · 熵权法</p>
   <nav class="mode-nav">
     <a class="mode-link" href="index.html">EFA模式一</a>
     <a class="mode-link" href="mode2.html">EFA模式二</a>
@@ -18,12 +17,6 @@
 </header>
 
 <main class="container">
-  <section class="notice">
-    <p><strong>使用说明：</strong>本工具基于一项针对中国中青年人群（n=712）的横断面调查数据训练的随机森林模型，
-    用于研究和科普目的，<strong>不能替代专业医疗诊断或建议</strong>。所有输入数据仅在您的浏览器本地计算，不会上传或保存到任何服务器。
-    本页使用的是<strong>熵权法</strong>膳食模式测度方式，如需查看EFA模式一或模式二版本，请点击上方导航切换。</p>
-  </section>
-
   <form id="predict-form">
     <section class="card">
       <h2>一、膳食模式（请回忆您近一年的平常食用频率）</h2>
@@ -66,24 +59,10 @@
   </form>
 
   <div id="result" hidden></div>
-
-  <section class="card about">
-    <h2>关于本模型（熵权法）</h2>
-    <ul>
-      <li>算法：随机森林（RandomForest，300棵树，最大深度10，叶节点最小样本数4），经嵌套交叉验证网格搜索确定超参数。</li>
-      <li>膳食模式变量：熵权法——基于信息论的客观赋权方法，78个原始食物题项按各自在样本中的离散程度（信息量）赋权后加总，
-        不依赖因子分析的统计假设，作为EFA方法的独立交叉验证。</li>
-      <li><strong>网页内膳食得分公式说明：</strong>熵权法的精确计算需要78个原始食物题项，为保持13输入体验，
-        本页用训练数据对"熵权法得分 ~ 13个食物大类均值得分"做OLS回归得到近似线性公式（R²=0.980，三个版本里精度最低的一个，
-        但仍是高精度近似，与真实熵权法得分会有细微误差）。</li>
-      <li>纳入模型的其余变量（LASSO在训练集上筛选得到）：运动习惯、肥胖家族史、EBQ进食行为总分、吸烟状态。</li>
-      <li>独立测试集表现：AUC ≈ 0.932（95% CI 0.900–0.960）。</li>
-    </ul>
-  </section>
 </main>
 
 <footer class="site-footer">
-  <p>本页面为学术研究衍生工具，预测结果仅供参考。</p>
+  <p>仅供研究参考，不能替代医疗诊断。</p>
 </footer>
 
 <script src="script_entropy.js"></script>
